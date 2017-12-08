@@ -1,0 +1,8 @@
+[package]
+name = "tachikoma"
+version = "0.1.0"
+authors = ["Paul COUAILLIER",
+           "Kerollmops <renault.cle@gmail.com>",
+           "Paul Butler <paul.butler@twosigma.com>"]
+
+[dependencies]
