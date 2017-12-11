@@ -4,6 +4,8 @@
  * code for more information.
  */
 
+extern crate rand;
+
 mod hlt;
 mod strategy;
 

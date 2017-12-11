@@ -84,9 +84,10 @@ impl<T: Decodable> Decodable for Option<T> {
         let present = bool::parse(tokens);
         let value = T::parse(tokens);
 
-        match present {
-            true => Some(value),
-            false => None,
+        if present {
+            Some(value)
+        } else {
+            None
         }
     }
 }

@@ -64,7 +64,7 @@ impl Game {
     pub fn send_command_queue(&self, commands: &[Command]) {
         for command in commands {
             let encoded = command.encode();
-            stdout().write(encoded.as_bytes()).unwrap();
+            stdout().write_all(encoded.as_bytes()).unwrap();
         }
         println!()
     }

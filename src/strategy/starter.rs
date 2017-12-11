@@ -1,8 +1,9 @@
 use hlt::game::Game;
-use hlt::entity::{Entity, DockingStatus};
+use hlt::logging::Logger;
+use hlt::entity::{DockingStatus};
 
 #[allow(unused)]
-pub fn run<'a>(game: &Game, name: &str)
+pub fn run(game: &Game, name: &str, mut _logger: Logger)
 {
     // Retrieve the first game map
     let game_map = game.update_map();
@@ -38,7 +39,7 @@ pub fn run<'a>(game: &Game, name: &str)
                     command_queue.push(ship.dock(planet))
                 } else {
                     // If not, navigate towards the planet
-                    let navigate_command = ship.navigate(&ship.closest_point_to(planet, 3.0), &game_map, 90);
+                    let navigate_command = ship.navigate(planet, &game_map, 90);
                     if let Some(command) = navigate_command {
                         command_queue.push(command)
                     }

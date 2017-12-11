@@ -62,17 +62,20 @@ impl Ship {
         if max_corrections == 0 {
             return None
         }
-        let angular_step = 1.0;
+        let target = &self.closest_point_to(target, 0f64);
         let speed = MAX_SPEED;
-        let distance = self.distance_with(target);
         let angle = self.angle_with(target);
-        if game_map.obstacles_between(self, target) {
-            let new_target_dx = f64::cos((angle + angular_step).to_radians()) * distance;
-            let new_target_dy = f64::sin((angle + angular_step).to_radians()) * distance;
-            let Position(self_x, self_y) = self.position;
-            let new_target = Position(self_x + new_target_dx, self_y + new_target_dy);
-            self.navigate(&new_target, game_map, max_corrections - 1)
+
+        if max_corrections == 0 {
+            let distance = self.distance_with(target);
+            return Some(self.thrust(min(speed, distance as i32), angle as i32));
+        }
+
+        if let Some(intersection) = game_map.obstacles_between(self, target) {
+            // TODO: Change direction
+            self.navigate(&intersection, game_map, max_corrections - 1)
         } else {
+            let distance = self.distance_with(target);
             Some(self.thrust(min(speed, distance as i32), angle as i32))
         }
     }

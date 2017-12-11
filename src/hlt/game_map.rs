@@ -1,5 +1,5 @@
 use hlt::game::Game;
-use hlt::entity::{GameState, Planet};
+use hlt::entity::{GameState, Position, Planet};
 use hlt::player::Player;
 use hlt::collision::intersect_segment_circle;
 use hlt::entity::{Entity, Ship};
@@ -32,13 +32,22 @@ impl<'a> GameMap<'a> {
         &self.state.players
     }
 
-    pub fn obstacles_between<T: Entity>(&self, ship: &Ship, target: &T) -> bool {
+    pub fn obstacles_between<T: Entity>(&self, ship: &Ship, target: &T) -> Option<Position> {
         for planet in self.all_planets() {
             if intersect_segment_circle(ship, target, planet, ship.radius() + 0.1) {
-                return true;
+                return Some(ship.closest_point_to(planet, 5f64));
             }
         }
-        false
+
+        for collision_ship in self.me().all_ships() {
+            if ship == collision_ship {
+                continue;
+            }
+            if intersect_segment_circle(ship, target, collision_ship, ship.radius() + 0.1) {
+                return Some(ship.closest_point_to(collision_ship, 1.2f64));
+            }
+        }
+        None
     }
     pub fn get_my_id(&self) -> usize {
         self.game.my_id

@@ -1,8 +1,9 @@
 [package]
-name = "tachikoma"
+name = "MyBot"
 version = "0.1.0"
 authors = ["Paul COUAILLIER",
            "Kerollmops <renault.cle@gmail.com>",
            "Paul Butler <paul.butler@twosigma.com>"]
 
 [dependencies]
+rand = "0.3"

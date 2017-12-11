@@ -10,7 +10,7 @@ impl Logger {
     }
 
     pub fn log(&mut self, message: &str) {
-        self.0.write(message.as_bytes()).expect("Couldn't write to log!");
-        self.0.write("\n".as_bytes()).expect("Couldn't write to log!");
+        self.0.write_all(message.as_bytes()).expect("Couldn't write to log!");
+        self.0.write_all(b"\n").expect("Couldn't write to log!");
     }
 }
